@@ -95,53 +95,36 @@ div[data-testid="stButton"] button {
     border: 1px solid;
     font-size: 15px;
     font-weight: 600;
-    margin: 0 !important; /* Reset margin */
+    margin: 0 auto 4px auto !important; /* Tengahkan dan beri jarak bawah ke tombol */
     box-sizing: border-box;
 }
-
-/* 2. Container utama (memaksa rata kiri dan baris rapi) */
 div[data-testid="stHorizontalBlock"]:has(.editor-card) {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 8px !important; /* Jarak antar kolom (kiri-kanan) */
+    gap: 8px !important; /* Jarak antar kartu */
     justify-content: flex-start !important;
-    align-items: flex-start !important; /* Memaksa semua kartu sejajar di atas */
 }
-
-/* 3. BAPAKNYA MASALAH: Sembunyikan spacer kosong bawaan Streamlit */
-div[data-testid="stHorizontalBlock"]:has(.editor-card) > div:empty,
-div[data-testid="stHorizontalBlock"]:has(.editor-card) > div:not([data-testid="column"]) {
-    display: none !important;
-}
-
-/* 4. Kunci ukuran kolom (wadah kartu + tombol) */
 div[data-testid="stHorizontalBlock"]:has(.editor-card) > div[data-testid="column"] {
     width: 55px !important;
     min-width: 55px !important;
     max-width: 55px !important;
     flex: 0 0 55px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 4px !important; /* Jarak atas-bawah antara Kartu dan Tombol */
-    margin-bottom: 8px !important; /* Jarak baris jika kartu banyak dan turun ke bawah */
+    padding: 0 !important;
+    margin-bottom: 8px !important; /* Jarak jika kartu terlalu banyak dan turun baris */
 }
 
-/* 5. Kunci ukuran tombol minus (-) */
 div[data-testid="stHorizontalBlock"]:has(.editor-card) div[data-testid="stButton"] button {
     width: 55px !important;
     min-width: 55px !important;
     height: 36px !important;
     min-height: 36px !important;
     padding: 0 !important;
+    margin: 0 auto !important;
+}
+div[data-testid="stHorizontalBlock"]:has(.editor-card) div[data-testid="stMarkdownContainer"] p {
     margin: 0 !important;
-}
-
-/* 6. Hapus margin siluman dari Streamlit Markdown */
-div[data-testid="stHorizontalBlock"]:has(.editor-card) div[data-testid="stMarkdownContainer"] > p {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-            
+    padding: 0 !important;
+}        
 </style>
 """, unsafe_allow_html=True)
 
@@ -395,7 +378,6 @@ def render_card_editor(cards, key_prefix):
             color = SUIT_COLOR.get(s, '#fff')
             emoji = SUIT_EMOJI.get(s, '?')
             with col:
-                # Gunakan class="editor-card" yang baru kita buat
                 st.markdown(
                     f'<div class="editor-card" style="color:{color};'
                     f'border-color:{color}55;background:{color}11">'
@@ -405,6 +387,8 @@ def render_card_editor(cards, key_prefix):
                 if st.button("−", key=f"{key_prefix}_del_{card}",
                              use_container_width=True, help=f"Hapus {v} {SUIT_NAME.get(s,s)}"):
                     current.remove(card)
+                    st.session_state['detected_cards'] = current 
+                    
                     st.rerun()
 
     # Tambah kartu
@@ -423,7 +407,6 @@ def render_card_editor(cards, key_prefix):
             if not remaining:
                 st.caption("Semua kartu sudah ada di tangan.")
             else:
-                # Group by value untuk tampilan lebih rapi
                 for val in reversed(ALL_VALUES):
                     val_cards = [c for c in remaining if parse_card(c)[0] == val]
                     if not val_cards:
@@ -443,6 +426,7 @@ def render_card_editor(cards, key_prefix):
                             ):
                                 current.append(card)
                                 st.session_state[f"{key_prefix}_show_add"] = False
+                                st.session_state['detected_cards'] = current
                                 st.rerun()
 
     return current
@@ -465,7 +449,7 @@ def get_sample_images():
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Header
-st.markdown('<div class="main-title">BEBAN CAPSA 🃏</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title">BEBAN CAPSA</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="tagline">'
     '"Jangan biarkan tongkrongan asyikmu terganggu karena kamu jadi BEBAN"'
