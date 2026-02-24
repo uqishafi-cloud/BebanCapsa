@@ -1,0 +1,24 @@
+[project]
+name = "bebancapsa"
+version = "0.1.0"
+description = "Jangan jadi beban tongkrongan!"
+authors = [
+    {name = "Uqi Shafi",email = "uqishafi@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "streamlit (>=1.39.0,<1.45.0)",
+    "pandas (>=1.4.0,<3.0.0)",
+    "pillow (>=9.0.0)",
+    "numpy (>=1.24.0,<2.0.0)",
+    "opencv-python-headless (>=4.8.0)",
+    "ultralytics (>=8.3.0)",
+    "pyyaml (>=6.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
