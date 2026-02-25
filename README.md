@@ -7,7 +7,7 @@ Aplikasi deteksi kartu capsa berbasis **YOLOv12** yang menganalisis kombinasi ka
 **Author:** Uqi Shafi
 
 ---
-**[Streamlit Beban Capsa](https://bebancapsa.streamlit.app/)** (https://bebancapsa.streamlit.app/)
+**[Streamlit Beban Capsa](https://bebancapsa.streamlit.app/)**
 
 ## Fitur
 
