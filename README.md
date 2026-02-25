@@ -11,93 +11,18 @@ Aplikasi deteksi kartu capsa berbasis **YOLOv12** yang menganalisis kombinasi ka
 ## Fitur
 
 - **Deteksi kartu otomatis** dari foto menggunakan YOLOv12
-- **Urutan kartu** dari terkuat ke terlemah (2 tertinggi, 3 terendah)
+- **Urutan kartu** dari terkuat ke terlemah
 - **Deteksi kombinasi:** Royal Flush, Straight Flush, Four of a Kind (Bomb), Full House, Flush, Straight, Tris, Pair
 - **Koreksi manual:** tambah kartu yang terlewat atau hapus kartu yang salah terdeteksi
 - **Sample image** untuk mencoba aplikasi tanpa perlu foto sendiri
-- Deploy di Streamlit Community Cloud
-
----
-
-## Struktur Folder
-
-```
-BebanCapsa/
-├── models/
-│   ├── .gitkeep
-│   └── best_capsa.pt        # model YOLOv12 (tidak di-commit ke GitHub)
-├── sample/
-│   ├── hand1.jpg            # sample foto kartu untuk demo
-│   ├── hand2.jpg
-│   └── hand3.jpg
-├── src/capsa/
-│   ├── __init__.py
-│   └── main.py              # aplikasi Streamlit
-├── training_code/
-│   └── Train_YOLOv12_Capsa.ipynb
-├── pyproject.toml
-├── poetry.lock
-├── .gitignore
-└── README.md
-```
-
----
-
-## Cara Menjalankan Secara Lokal
-
-### Prasyarat
-
-- Python 3.12
-- Poetry 2.x
-- NVIDIA GPU (opsional, untuk inferensi lebih cepat)
-
-### Langkah-langkah
-
-**1. Clone repository**
-
-```bash
-git clone https://github.com/uqishafi-cloud/BebanCapsa.git
-cd BebanCapsa
-```
-
-**2. Install dependencies via Poetry**
-
-```bash
-poetry env use python3.12
-poetry install
-```
-
-**3. Install PyTorch GPU** (skip jika tidak punya GPU NVIDIA)
-
-```bash
-poetry run pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
-```
-
-**4. Download model**
-
-Unduh file `best_capsa.pt` dari link berikut dan taruh di folder `models/`:
-
-```
-[Link Google Drive model]
-```
-
-Atau jalankan script download otomatis:
-
-```bash
-poetry run python download_model.py
-```
-
-**5. Jalankan aplikasi**
-
-```bash
-poetry run streamlit run src/capsa/main.py
-```
-
-Buka browser di `http://localhost:8501`
 
 ---
 
 ## Cara Menggunakan Aplikasi
+
+```
+poetry run streamlit run src/bebancapsa/main.py
+```
 
 **Upload foto:**
 1. Klik area upload atau drag & drop foto kartu
