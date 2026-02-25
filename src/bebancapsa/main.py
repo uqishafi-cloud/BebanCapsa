@@ -180,6 +180,26 @@ def render_cards_html(cards):
         )
     return html
 
+def ensure_model():
+    model_path = Path("models/best_capsa.pt")
+    if model_path.exists():
+        return
+
+    try:
+        file_id = st.secrets["MODEL_FILE_ID"]
+    except KeyError:
+        st.error("MODEL_FILE_ID tidak ditemukan di Streamlit Secrets. Hubungi admin.")
+        st.stop()
+
+    import gdown
+    model_path.parent.mkdir(parents=True, exist_ok=True)
+    url = f"https://drive.google.com/uc?id={file_id}"
+
+    with st.spinner("Menyiapkan model... (hanya saat pertama)"):
+        gdown.download(url, str(model_path), quiet=False)
+
+ensure_model()
+
 @st.cache_resource
 def load_model():
     p = Path("models/best_capsa.pt")
